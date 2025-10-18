@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartBudget - AI-Powered Personal Finance Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="theme-toggle">
+        <input type="checkbox" id="theme-switch">
+        <label for="theme-switch" class="toggle-label">
+            <i class="fas fa-sun"></i>
+            <i class="fas fa-moon"></i>
+            <div class="toggle-ball"></div>
+        </label>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-wallet"></i> SmartBudget</h1>
+            <p>Your AI-Powered Personal Finance Tracker</p>
+        </header>
+
+        <div class="alert-container" id="alertContainer"></div>
+
+        <div class="dashboard">
+            <div class="card summary-card">
+                <h2>Budget Summary</h2>
+                <div class="budget-info">
+                    <div class="budget-item">
+                        <span>Total Budget:</span>
+                        <span id="totalBudget">₹0</span>
+                    </div>
+                    <div class="budget-item">
+                        <span>Total Spent:</span>
+                        <span id="totalSpent">₹0</span>
+                    </div>
+                    <div class="budget-item">
+                        <span>Remaining:</span>
+                        <span id="remainingBudget">₹0</span>
+                    </div>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-bar" id="budgetProgressBar">
+                        <div class="progress" id="budgetProgress"></div>
+                    </div>
+                    <span id="budgetPercentage">0%</span>
+                </div>
+            </div>
+
+            <div class="card budget-card">
+                <h2>Set Budget</h2>
+                <form id="budgetForm">
+                    <div class="form-group">
+                        <label for="budgetAmount">Total Budget Amount (₹)</label>
+                        <input type="number" id="budgetAmount" required min="1">
+                    </div>
+                    <div class="form-group">
+                        <label for="budgetPeriod">Budget Period</label>
+                        <select id="budgetPeriod">
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly" selected>Monthly</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn">Set Budget</button>
+                </form>
+            </div>
+
+            <div class="card categories-card">
+                <h2>Budget Categories</h2>
+                <div id="categoriesList">
+                    <!-- Categories will be added here dynamically -->
+                </div>
+                <form id="categoryForm">
+                    <div class="form-group">
+                        <label for="categoryName">New Category</label>
+                        <input type="text" id="categoryName" placeholder="Category name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="categoryBudget">Allocation (₹)</label>
+                        <input type="number" id="categoryBudget" placeholder="Amount" required min="1">
+                    </div>
+                    <button type="submit" class="btn">Add Category</button>
+                </form>
+            </div>
+
+            <div class="card expense-card">
+                <h2>Add Expense</h2>
+                <form id="expenseForm">
+                    <div class="form-group">
+                        <label for="expenseDate">Date</label>
+                        <input type="date" id="expenseDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="expenseAmount">Amount (₹)</label>
+                        <input type="number" id="expenseAmount" required min="1">
+                    </div>
+                    <div class="form-group">
+                        <label for="expenseCategory">Category</label>
+                        <select id="expenseCategory" required>
+                            <!-- Categories will be added here dynamically -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="expenseDescription">Description</label>
+                        <input type="text" id="expenseDescription" placeholder="Optional description">
+                    </div>
+                    <button type="submit" class="btn">Add Expense</button>
+                </form>
+            </div>
+
+            <div class="card chart-card">
+                <h2>Spending Breakdown</h2>
+                <div class="chart-container">
+                    <canvas id="expenseChart"></canvas>
+                </div>
+            </div>
+
+            <div class="card expenses-list-card">
+                <h2>Recent Expenses</h2>
+                <div class="expenses-table-container">
+                    <table id="expensesTable">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Category</th>
+                                <th>Description</th>
+                                <th>Amount</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="expensesList">
+                            <!-- Expenses will be added here dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card reports-card">
+                <h2>Reports</h2>
+                <div class="reports-summary">
+                    <div class="report-item">
+                        <span>Total Income:</span>
+                        <span id="totalIncome">₹0</span>
+                    </div>
+                    <div class="report-item">
+                        <span>Total Expenses:</span>
+                        <span id="reportTotalExpenses">₹0</span>
+                    </div>
+                    <div class="report-item">
+                        <span>Balance:</span>
+                        <span id="reportBalance">₹0</span>
+                    </div>
+                </div>
+                <div class="insights" id="insights">
+                    <!-- Insights will be added here dynamically -->
+                </div>
+                <div class="export-buttons">
+                    <button id="exportCSV" class="btn btn-secondary">Export as CSV</button>
+                    <button id="exportPDF" class="btn btn-secondary">Export as PDF</button>
+                </div>
+            </div>
+
+            <div class="card recommendations-card">
+                <h2>Smart Recommendations</h2>
+                <div id="recommendationsList">
+                    <!-- Recommendations will be added here dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2023 SmartBudget - Your AI-Powered Personal Finance Tracker</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
